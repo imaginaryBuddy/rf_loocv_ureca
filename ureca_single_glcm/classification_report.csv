@@ -1,0 +1,24 @@
+,precision,recall,f1-score,support
+Alstonia Angulstiloba,0.5,0.5,0.5,2.0
+Bridelia Sp.,0.25,0.5,0.3333333333333333,2.0
+Calophyllum,1.0,1.0,1.0,1.0
+Campnosperma Auriculatum,1.0,0.0,0.0,1.0
+Cinnamomum Iners,0.0,0.0,0.0,2.0
+Claoxylon Indicum,1.0,0.0,0.0,1.0
+Clausena Excavata,1.0,0.0,0.0,2.0
+Cratoxylum Formosum,1.0,0.0,0.0,1.0
+Dillenia Suffruticosa,1.0,0.0,0.0,1.0
+Falcataria Moluccana,0.0,0.0,0.0,3.0
+Ficus Variegata,0.25,0.5,0.3333333333333333,2.0
+Leea Indica,1.0,0.0,0.0,1.0
+Pennisetum Purpureum,1.0,0.0,0.0,1.0
+Pometia Pinnata,0.0,0.0,0.0,1.0
+Sandoricum Koetjape,1.0,0.0,0.0,1.0
+Shorea Leprosula,0.3333333333333333,1.0,0.5,1.0
+Spathodea Campanulatum,0.5,1.0,0.6666666666666666,4.0
+Sterculia Parviflora,0.6,0.75,0.6666666666666665,4.0
+Syzygium Polyanthum,1.0,0.0,0.0,2.0
+Terminalia Catappa,1.0,1.0,1.0,1.0
+accuracy,0.38235294117647056,0.38235294117647056,0.38235294117647056,0.38235294117647056
+macro avg,0.6716666666666666,0.3125,0.25,34.0
+weighted avg,0.580392156862745,0.38235294117647056,0.29901960784313725,34.0

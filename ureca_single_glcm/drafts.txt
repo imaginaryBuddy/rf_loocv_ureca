@@ -1,0 +1,201 @@
+ '''
+     DEC
+     '''
+    dec_bounds = pd.read_csv(dec_dir + "raw_18Dec2020_bounds.csv")
+    #
+    # dec_data_rgb = CrownGLCMGenerator(dec_dir + "raw_18Dec2020_result.tif", dec_bounds, True)
+    #
+    # dec_data_rgb.generate_glcm_with_features(Band(0))
+    # dec_data_rgb.generate_glcm_with_features(Band(1))
+    # dec_data_rgb.generate_glcm_with_features(Band(2))
+    #
+    # dec_features_r = pd.DataFrame(dec_data_rgb.bands_species_glcm[Band(0).name],
+    #                                 columns=['tree_name','dec_r_raw_mean', 'dec_r_glcm_mean', f'dec_{Band(0).name}_{FEATURES[0]}',
+    #                                          f'dec_{Band(0).name}_{FEATURES[1]}', f'dec_{Band(0).name}_{FEATURES[2]}',
+    #                                          f'dec_{Band(0).name}_{FEATURES[3]}', f'dec_{Band(0).name}_{FEATURES[4]}'
+    #                                          , f'dec_{Band(0).name}_{FEATURES[5]}'])
+    # dec_features_r.index.name = 'index'
+    # dec_features_g = pd.DataFrame(dec_data_rgb.bands_species_glcm[Band(1).name],
+    #                                 columns=['tree_name','dec_g_raw_mean', 'dec_g_glcm_mean', f'dec_{Band(1).name}_{FEATURES[0]}',
+    #                                          f'dec_{Band(1).name}_{FEATURES[1]}', f'dec_{Band(1).name}_{FEATURES[2]}',
+    #                                          f'dec_{Band(1).name}_{FEATURES[3]}', f'dec_{Band(1).name}_{FEATURES[4]}'
+    #                                          , f'dec_{Band(1).name}_{FEATURES[5]}'])
+    # dec_features_g.index.name = 'index'
+    # dec_features_b = pd.DataFrame(dec_data_rgb.bands_species_glcm[Band(2).name],
+    #                                 columns=['tree_name','dec_b_raw_mean', 'dec_b_glcm_mean', f'dec_{Band(2).name}_{FEATURES[0]}',
+    #                                          f'dec_{Band(2).name}_{FEATURES[1]}', f'dec_{Band(2).name}_{FEATURES[2]}',
+    #                                          f'dec_{Band(2).name}_{FEATURES[3]}', f'dec_{Band(2).name}_{FEATURES[4]}'
+    #                                          , f'dec_{Band(2).name}_{FEATURES[5]}'])
+    # dec_features_b.index.name = 'index'
+    #
+    # dec_features_b.to_csv('data/dec_features_b.csv')
+    # dec_features_r.to_csv('data/dec_features_r.csv')
+    # dec_features_g.to_csv('data/dec_features_g.csv')
+    #
+    # dec_data_RE = CrownGLCMGenerator(dec_dir + "result_RedEdge.tif", dec_bounds, False)
+    # dec_data_RE.generate_glcm_with_features(Band(3))
+    # dec_data_NIR = CrownGLCMGenerator(dec_dir + "result_NIR.tif", dec_bounds, False)
+    # dec_data_NIR.generate_glcm_with_features(Band(4))
+    #
+    # dec_features_RE = pd.DataFrame(dec_data_RE.bands_species_glcm[Band(3).name],
+    #                                  columns=['tree_name','dec_RE_raw_mean', 'dec_RE_glcm_mean', f'dec_{Band(3).name}_{FEATURES[0]}',
+    #                                           f'dec_{Band(3).name}_{FEATURES[1]}', f'dec_{Band(3).name}_{FEATURES[2]}',
+    #                                           f'dec_{Band(3).name}_{FEATURES[3]}', f'dec_{Band(3).name}_{FEATURES[4]}'
+    #                                          , f'dec_{Band(3).name}_{FEATURES[5]}'])
+    # dec_features_RE.index.name = 'index'
+    # dec_features_NIR = pd.DataFrame(dec_data_NIR.bands_species_glcm[Band(4).name],
+    #                                   columns=['tree_name','dec_NIR_raw_mean', 'dec_NIR_glcm_mean', f'dec_{Band(4).name}_{FEATURES[0]}',
+    #                                            f'dec_{Band(4).name}_{FEATURES[1]}', f'dec_{Band(4).name}_{FEATURES[2]}',
+    #                                            f'dec_{Band(4).name}_{FEATURES[3]}', f'dec_{Band(4).name}_{FEATURES[4]}'
+    #                                          , f'dec_{Band(4).name}_{FEATURES[5]}'])
+    # dec_features_NIR.index.name = 'index'
+    #
+    # dec_features_RE.to_csv('data/dec_features_RE.csv')
+    # dec_features_NIR.to_csv('data/dec_features_NIR.csv')
+    # '''
+    # MAY
+    # '''
+    #
+    may_bounds = pd.read_csv(may_dir + "raw_10May2021_90deg43m85pct255deg_bounds.csv")
+    # may_data_rgb = CrownGLCMGenerator(may_dir + "raw_10May2021_90deg43m85pct255deg_result.tif", may_bounds, True)
+    # may_data_rgb.generate_glcm_with_features(Band(0))
+    # may_data_rgb.generate_glcm_with_features(Band(1))
+    # may_data_rgb.generate_glcm_with_features(Band(2))
+    # may_features_r = pd.DataFrame(may_data_rgb.bands_species_glcm[Band(0).name],
+    #                                 columns=['tree_name','may_r_raw_mean', 'may_r_glcm_mean', f'may_{Band(0).name}_{FEATURES[0]}',
+    #                                          f'may_{Band(0).name}_{FEATURES[1]}', f'may_{Band(0).name}_{FEATURES[2]}',
+    #                                            f'may_{Band(0).name}_{FEATURES[3]}', f'may_{Band(0).name}_{FEATURES[4]}'
+    #                                          , f'may_{Band(0).name}_{FEATURES[5]}'])
+    # may_features_r.index.name = 'index'
+    # may_features_g = pd.DataFrame(may_data_rgb.bands_species_glcm[Band(1).name],
+    #                                 columns=['tree_name','may_g_raw_mean', 'may_g_glcm_mean', f'may_{Band(1).name}_{FEATURES[0]}',
+    #                                          f'may_{Band(1).name}_{FEATURES[1]}', f'may_{Band(1).name}_{FEATURES[2]}',
+    #                                            f'may_{Band(1).name}_{FEATURES[3]}', f'may_{Band(1).name}_{FEATURES[4]}'
+    #                                          , f'may_{Band(1).name}_{FEATURES[5]}'])
+    # may_features_g.index.name = 'index'
+    # may_features_b = pd.DataFrame(may_data_rgb.bands_species_glcm[Band(2).name],
+    #                                 columns=['tree_name','may_b_raw_mean', 'may_b_glcm_mean', f'may_{Band(2).name}_{FEATURES[0]}',
+    #                                          f'may_{Band(2).name}_{FEATURES[1]}', f'may_{Band(2).name}_{FEATURES[2]}',
+    #                                            f'may_{Band(2).name}_{FEATURES[3]}', f'may_{Band(2).name}_{FEATURES[4]}'
+    #                                          , f'may_{Band(2).name}_{FEATURES[5]}'])
+    # may_features_b.index.name = 'index'
+    #
+    #
+    #
+    # may_features_b.to_csv('data/may_features_b.csv')
+    # may_features_r.to_csv('data/may_features_r.csv')
+    # may_features_g.to_csv('data/may_features_g.csv')
+    #
+    # may_data_RE = CrownGLCMGenerator(may_dir + "raw_10May2021_90deg43m85pct255deg_result_RedEdge (1).tif", may_bounds,
+    #                                  False)
+    # may_data_RE.generate_glcm_with_features(Band(3))
+    # may_data_NIR = CrownGLCMGenerator(may_dir + "raw_10May2021_90deg43m85pct255deg_result_NIR.tif", may_bounds, False)
+    # may_data_NIR.generate_glcm_with_features(Band(4))
+    #
+    # may_features_RE = pd.DataFrame(may_data_RE.bands_species_glcm[Band(3).name],
+    #                                  columns=['tree_name','may_RE_raw_mean', 'may_RE_glcm_mean', f'may_{Band(3).name}_{FEATURES[0]}',
+    #                                           f'may_{Band(3).name}_{FEATURES[1]}', f'may_{Band(3).name}_{FEATURES[2]}',
+    #                                           f'may_{Band(3).name}_{FEATURES[3]}', f'may_{Band(3).name}_{FEATURES[4]}'
+    #                                          , f'may_{Band(3).name}_{FEATURES[5]}'])
+    # may_features_RE.index.name = 'index'
+    # may_features_NIR = pd.DataFrame(may_data_NIR.bands_species_glcm[Band(4).name],
+    #                                   columns=['tree_name','may_NIR_raw_mean', 'may_NIR_glcm_mean', f'may_{Band(4).name}_{FEATURES[0]}',
+    #                                            f'may_{Band(4).name}_{FEATURES[1]}', f'may_{Band(4).name}_{FEATURES[2]}',
+    #                                            f'may_{Band(4).name}_{FEATURES[3]}', f'may_{Band(4).name}_{FEATURES[4]}'
+    #                                          , f'may_{Band(4).name}_{FEATURES[5]}'])
+    # may_features_NIR.index.name = 'index'
+    # may_features_RE.to_csv('data/may_features_RE.csv')
+    # may_features_RE.to_csv('data/may_features_NIR.csv')
+
+    # dec_features_r = pd.read_csv('data/dec_features_r.csv')
+    # dec_features_g = pd.read_csv('data/dec_features_g.csv')
+    # dec_features_b = pd.read_csv('data/dec_features_b.csv')
+    # dec_features_RE = pd.read_csv('data/dec_features_RE.csv')
+    # dec_features_NIR = pd.read_csv('data/dec_features_NIR.csv')
+    #
+    #
+    # may_features_r = pd.read_csv('data/may_features_r.csv')
+    # may_features_g = pd.read_csv('data/may_features_g.csv')
+    # may_features_b = pd.read_csv('data/may_features_b.csv')
+    # may_features_RE = pd.read_csv('data/may_features_RE.csv')
+    # may_features_NIR = pd.read_csv('data/may_features_NIR.csv')
+    #
+    #
+    # dec_dfs = [dec_features_r, dec_features_g, dec_features_b, dec_features_RE, dec_features_NIR]
+    # may_dfs = [may_features_r, may_features_g, may_features_b, may_features_RE, may_features_NIR]
+    # dec_merged_df = reduce(lambda left, right: pd.merge(left, right, on=['index', 'tree_name'],
+    #                                                 how='outer'), dec_dfs)
+    # may_merged_df = reduce(lambda left, right: pd.merge(left, right, on=['index', 'tree_name'],
+    #                                                     how='outer'), may_dfs)
+    # dec_merged_df.drop(columns=["index"])
+    # may_merged_df.drop(columns=["index"])
+    # # dec_merged_df = merge("dec",
+    # #                       [dec_features_r, dec_features_g, dec_features_b, dec_features_RE, dec_features_NIR])
+    # # may_merged_df = merge("may",
+    # #                       [may_features_r, may_features_g, may_features_b, may_features_RE, may_features_NIR])
+    #
+    # # make sure that when you concatenate, the column names are the same
+    # sets = ["raw_mean", "glcm_mean", *FEATURES]
+    # col_names = ["index", "tree_name", *["r_"+x for x in sets],
+    #              *["g_"+x for x in sets], *["b_"+x for x in sets], *["RE_"+x for x in sets], *["NIR_"+x for x in sets]]
+    #
+    # dec_merged_df.rename(columns=lambda x: col_names[dec_merged_df.columns.get_loc(x)], inplace=True)
+    # may_merged_df.rename(columns=lambda x: col_names[may_merged_df.columns.get_loc(x)], inplace=True)
+    # all_merged_df = pd.concat([dec_merged_df, may_merged_df], axis=0, ignore_index=True)
+    #
+    # # encode the species values and put in column = 'id_based_on_tree_name'
+    # dec_merged_df_e = encode_tree_species(dec_merged_df)
+    # may_merged_df_e = encode_tree_species(may_merged_df)
+    # all_merged_df_e = encode_tree_species(all_merged_df)
+    #
+    #
+    # #
+    # all_merged_df_e.to_csv("data/all_merged_data_e.csv")
+    # dec_merged_df_e.to_csv("data/dec_merged_data_e.csv")
+    # may_merged_df_e.to_csv("data/may_merged_data_e.csv")
+
+
+      # fix datasets
+    # preprocessing()
+    # warnings.filterwarnings("ignore",
+    #                         message="The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.")
+
+
+    dec_merged_df_e = pd.read_csv("data/dec_merged_data_e.csv").drop(columns=["index"])
+    dec_merged_df_e = dec_merged_df_e[dec_merged_df_e.columns.drop(list(dec_merged_df_e.filter(regex="raw")))]
+    may_merged_df_e = pd.read_csv("data/may_merged_data_e.csv").drop(columns=["index"])
+    may_merged_df_e = may_merged_df_e[may_merged_df_e.columns.drop(list(may_merged_df_e.filter(regex="raw")))]
+    all_merged_df_e = pd.read_csv("data/all_merged_data_e.csv").drop(columns=["index"])
+    all_merged_df_e = all_merged_df_e[all_merged_df_e.columns.drop(list(all_merged_df_e.filter(regex="raw")))]
+    #
+    # #execute algo
+    # dec_algo_mng = RandomForestManager(dec_merged_df_e)
+    # may_algo_mng = RandomForestManager(may_merged_df_e)
+    # all_algo_mng = RandomForestManager(all_merged_df_e)
+    # print("avg accuracy scores of rf with LOOCV:")
+    # print("-"*40)
+    #
+
+    rf = RandomForestOnly(dec_merged_df_e, may_merged_df_e, "trained_dec_tested_may_25_march")
+    rf.execute()
+    rf.get_feature_importances()
+    # print("dec")
+    # _acc_dec, dec_importances = dec_algo_mng.LOOCV_RF()
+    # print("importances: ")
+    # print(dec_importances)
+    # print("-"*40)
+    #
+    # #
+    # print("may")
+    # _acc_may, may_importances = may_algo_mng.LOOCV_RF()
+    # print("importances: ")
+    # print(may_importances)
+    # print("-" * 40)
+    # #
+    # #
+    # print("all")
+    # _acc_all, all_importances = all_algo_mng.LOOCV_RF()
+    # print("importances: ")
+    # print(all_importances)
+    # print("-" * 40)
+
