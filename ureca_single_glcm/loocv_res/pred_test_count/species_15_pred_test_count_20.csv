@@ -1,0 +1,42 @@
+,test,pred,tp_count
+0,['Alstonia Angulstiloba'],['Alstonia Angulstiloba'],3
+1,['Alstonia Angulstiloba'],['Sterculia Parviflora'],1
+2,['Bridelia Sp.'],['Bridelia Sp.'],1
+3,['Bridelia Sp.'],['Claoxylon Indicum'],1
+4,['Bridelia Sp.'],['Spathodea Campanulatum'],1
+5,['Bridelia Sp.'],['Sterculia Parviflora'],1
+6,['Calophyllum'],['Sterculia Parviflora'],2
+7,['Cinnamomum Iners'],['Clausena Excavata'],1
+8,['Cinnamomum Iners'],['Sandoricum Koetjape'],1
+9,['Cinnamomum Iners'],['Spathodea Campanulatum'],1
+10,['Cinnamomum Iners'],['Sterculia Parviflora'],1
+11,['Claoxylon Indicum'],['Bridelia Sp.'],1
+12,['Claoxylon Indicum'],['Syzygium Polyanthum'],1
+13,['Clausena Excavata'],['Clausena Excavata'],2
+14,['Clausena Excavata'],['Sterculia Parviflora'],1
+15,['Clausena Excavata'],['Syzygium Polyanthum'],1
+16,['Falcataria Moluccana'],['Alstonia Angulstiloba'],1
+17,['Falcataria Moluccana'],['Cinnamomum Iners'],1
+18,['Falcataria Moluccana'],['Falcataria Moluccana'],2
+19,['Falcataria Moluccana'],['Ficus Variegata'],1
+20,['Falcataria Moluccana'],['Spathodea Campanulatum'],1
+21,['Ficus Variegata'],['Falcataria Moluccana'],1
+22,['Ficus Variegata'],['Spathodea Campanulatum'],3
+23,['Pometia Pinnata'],['Sterculia Parviflora'],2
+24,['Sandoricum Koetjape'],['Cinnamomum Iners'],1
+25,['Sandoricum Koetjape'],['Syzygium Polyanthum'],1
+26,['Shorea Leprosula'],['Bridelia Sp.'],1
+27,['Shorea Leprosula'],['Clausena Excavata'],1
+28,['Spathodea Campanulatum'],['Ficus Variegata'],1
+29,['Spathodea Campanulatum'],['Spathodea Campanulatum'],5
+30,['Spathodea Campanulatum'],['Sterculia Parviflora'],1
+31,['Spathodea Campanulatum'],['Syzygium Polyanthum'],1
+32,['Sterculia Parviflora'],['Bridelia Sp.'],1
+33,['Sterculia Parviflora'],['Calophyllum'],1
+34,['Sterculia Parviflora'],['Cinnamomum Iners'],1
+35,['Sterculia Parviflora'],['Sterculia Parviflora'],5
+36,['Syzygium Polyanthum'],['Cinnamomum Iners'],1
+37,['Syzygium Polyanthum'],['Clausena Excavata'],1
+38,['Syzygium Polyanthum'],['Falcataria Moluccana'],1
+39,['Syzygium Polyanthum'],['Sterculia Parviflora'],1
+40,['Terminalia Catappa'],['Spathodea Campanulatum'],2

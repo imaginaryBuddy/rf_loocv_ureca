@@ -1,0 +1,26 @@
+,test,pred,tp_count
+0,['Alstonia Angulstiloba'],['Alstonia Angulstiloba'],3
+1,['Alstonia Angulstiloba'],['Falcataria Moluccana'],1
+2,['Bridelia Sp.'],['Spathodea Campanulatum'],1
+3,['Bridelia Sp.'],['Syzygium Polyanthum'],3
+4,['Cinnamomum Iners'],['Falcataria Moluccana'],1
+5,['Cinnamomum Iners'],['Ficus Variegata'],1
+6,['Cinnamomum Iners'],['Syzygium Polyanthum'],2
+7,['Clausena Excavata'],['Cinnamomum Iners'],1
+8,['Clausena Excavata'],['Clausena Excavata'],1
+9,['Clausena Excavata'],['Spathodea Campanulatum'],1
+10,['Clausena Excavata'],['Syzygium Polyanthum'],1
+11,['Falcataria Moluccana'],['Alstonia Angulstiloba'],1
+12,['Falcataria Moluccana'],['Falcataria Moluccana'],4
+13,['Falcataria Moluccana'],['Ficus Variegata'],1
+14,['Ficus Variegata'],['Falcataria Moluccana'],1
+15,['Ficus Variegata'],['Spathodea Campanulatum'],3
+16,['Shorea Leprosula'],['Bridelia Sp.'],2
+17,['Spathodea Campanulatum'],['Ficus Variegata'],1
+18,['Spathodea Campanulatum'],['Spathodea Campanulatum'],6
+19,['Spathodea Campanulatum'],['Syzygium Polyanthum'],1
+20,['Syzygium Polyanthum'],['Bridelia Sp.'],1
+21,['Syzygium Polyanthum'],['Cinnamomum Iners'],2
+22,['Syzygium Polyanthum'],['Clausena Excavata'],1
+23,['Terminalia Catappa'],['Ficus Variegata'],1
+24,['Terminalia Catappa'],['Spathodea Campanulatum'],1

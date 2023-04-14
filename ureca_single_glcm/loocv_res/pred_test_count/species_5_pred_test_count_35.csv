@@ -1,0 +1,12 @@
+,test,pred,tp_count
+0,['Bridelia Sp.'],['Bridelia Sp.'],3
+1,['Bridelia Sp.'],['Falcataria Moluccana'],1
+2,['Falcataria Moluccana'],['Falcataria Moluccana'],5
+3,['Falcataria Moluccana'],['Ficus Variegata'],1
+4,['Ficus Variegata'],['Spathodea Campanulatum'],3
+5,['Ficus Variegata'],['Terminalia Catappa'],1
+6,['Spathodea Campanulatum'],['Bridelia Sp.'],1
+7,['Spathodea Campanulatum'],['Ficus Variegata'],2
+8,['Spathodea Campanulatum'],['Spathodea Campanulatum'],5
+9,['Terminalia Catappa'],['Ficus Variegata'],1
+10,['Terminalia Catappa'],['Spathodea Campanulatum'],1

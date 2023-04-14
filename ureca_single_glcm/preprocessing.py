@@ -21,9 +21,10 @@ dec_dir = "source/dec/"
 mean = {}
 SAVE_AS: str = "glcm_for_each_crown"
 
-DIRECTIONS : list = [0, np.pi/2, np.pi/4, 3*np.pi/4]
+# DIRECTIONS : list = [0, np.pi/2, np.pi/4, 3*np.pi/4]
+DIRECTIONS : list = [0]
 STEP_SIZES: list = [1]
-LEVEL: int = 256
+LEVEL: int = 128
 # mean_homogeneity means taking the avg in all directions mentioned
 FEATURES: list = ['mean_homogeneity', 'mean_contrast', 'mean_dissimilarity', 'mean_ASM', 'mean_correlation', 'mean_energy']
 
@@ -33,24 +34,31 @@ class Band(enum.Enum):
     blue = 2
     RE = 3
     NIR = 4
-    W_RE = 5
-    W_NIR = 6
+    WR = 5
+    WG = 6
+    WB = 7
 
 
 class CrownGLCMGenerator():
-    def __init__(self, img_file, bounds_df, RGB_or_not: bool):
+    def __init__(self, img_file, bounds_df, RGB_or_not: bool, bin_to: int=None, wideband: bool=True):
         self.bounds_df = bounds_df
+        self.wide_band = wideband
         # for rgb only
         self.img_file = img_file
         self.RGB = RGB_or_not
         self.img, self.bands = self.get_img(img_file)
         self.bands_species_glcm: DefaultDict[List] =  {}
         self.pd_data = pd.DataFrame()
+        self.bin_to = bin_to
 
-    def generate_glcm_mean(self, glcm):
+    def generate_glcm_mean(self, glcm, name):
         glcm_mean = []
+
         for d in range(len(DIRECTIONS)):
             m = 0
+            g = glcm[:,:,0,d]
+            shape = g.shape
+            np.savetxt(f"{name}_{shape}_dec_glcm.csv",g , delimiter=",")
             for i in range(LEVEL):
                 for j in range(i, LEVEL): #symmetrical
                     m += i*glcm[i, j, 0, d]
@@ -65,7 +73,14 @@ class CrownGLCMGenerator():
 
         for i, tree in self.bounds_df.iterrows():
             tree_name, y0, y1, x0, x1 = tree.str.split("|")[0]
-            glcm = graycomatrix(self.bands[index][int(y0):int(y1) + 1, int(x0):int(x1) + 1], distances=STEP_SIZES, \
+            # if self.bin_to:
+            #     b_arr = self.binning(self.bands[index][int(y0):int(y1) + 1, int(x0):int(x1) + 1], LEVEL)
+            b_arr = self.hardcode_downscale(self.bands[index][int(y0):int(y1) + 1, int(x0):int(x1) + 1])
+            print(np.nanmax(b_arr))
+            b_arr_uint = b_arr.astype(np.uint)
+            # else:
+            #     b_arr = self.bands[index][int(y0):int(y1) + 1, int(x0):int(x1) + 1]
+            glcm = graycomatrix(b_arr_uint, distances=STEP_SIZES, \
                                 angles=DIRECTIONS, levels=LEVEL, symmetric=True, normed=True)
             # g = np.zeros((LEVEL, LEVEL))
             # for angle_index in range(len(DIRECTIONS)):
@@ -77,7 +92,7 @@ class CrownGLCMGenerator():
             tree_name, raw_mean, glcm_mean, homogeneity, contrast 
             '''
             self.bands_species_glcm[band.name].append(
-                [tree_name, np.mean(self.generate_glcm_mean(glcm)),
+                [tree_name, np.mean(self.generate_glcm_mean(glcm, band.name)),
                  np.mean(graycoprops(glcm,'homogeneity')), np.mean(graycoprops(glcm, 'contrast')), np.mean(graycoprops(glcm, 'dissimilarity')),
                  np.mean(graycoprops(glcm, 'ASM')), np.mean(graycoprops(glcm, 'correlation')),
                  np.mean(graycoprops(glcm, 'energy'))])
@@ -86,6 +101,10 @@ class CrownGLCMGenerator():
             #     else np.append(self.bands_species_glcm[band.name][tree_name], glcm) # if axis is None, out is a flattened array for np.append
     # def show_img(self):
     #     plt.imshow(self.img)
+    def generate_hist(self, band, name):
+        plt.hist(band, 100, range=[0, np.nanmax(band)])
+        plt.title = name
+        plt.show()
 
     def get_img(self, file):
         if self.RGB: # if it's a file with RGB
@@ -94,11 +113,17 @@ class CrownGLCMGenerator():
             b1 = im.GetRasterBand(1).ReadAsArray() # r
             b2 = im.GetRasterBand(2).ReadAsArray() # g
             b3 = im.GetRasterBand(3).ReadAsArray() # b
-            b4 = im.GetRasterBand(4).ReadAsArray() #alpha band
+            b4 = im.GetRasterBand(4).ReadAsArray() # alpha band
 
             img = np.dstack((b1, b2, b3, b4))
             # print(np.min(b1.flatten()), np.max(b1.flatten()))
             return img, [b1, b2, b3, b4]
+        elif self.wide_band == True:
+            im = gdal.Open(file)
+            b1 = im.GetRasterBand(1).ReadAsArray()
+            img = np.dstack(b1)
+            return img, [b1]
+
         else:
             im = gdal.Open(file)
             b1 = im.GetRasterBand(1)
@@ -119,7 +144,18 @@ class CrownGLCMGenerator():
             img = np.dstack(b1_arr)
             return img, [quantized]
 
+    def binning(self, band_arr, bin_to):
+        num_bits = int(np.ceil(np.log2((np.nanmax(band_arr)))))
+        print(num_bits)
+        band_arr = np.rint(band_arr)
+        bins = np.linspace(np.nanmin(band_arr), 2 ** num_bits, LEVEL - 1)
+        quantized = np.digitize(band_arr, bins)
+        return quantized
 
+    def hardcode_downscale(self, band_arr):
+        band_arr = band_arr//(2**7)
+        band_arr.astype(np.uint)
+        return band_arr
 def merge(name, list_of_dfs: List[pd.DataFrame]):
     merge_df = pd.DataFrame()
     for i in range(len(list_of_dfs)):
@@ -148,77 +184,12 @@ def encode_tree_species(data):
     return data_new
 
 def preprocessing():
-    # dec_features_r = pd.read_csv('data/redo/dec_features_r.csv')
-    # dec_features_g = pd.read_csv('data/redo/dec_features_g.csv')
-    # dec_features_b = pd.read_csv('data/redo/dec_features_b.csv')
-    # dec_features_RE = pd.read_csv('data/redo/dec_features_RE.csv')
-    # dec_features_NIR = pd.read_csv('data/redo/dec_features_NIR.csv')
-    #
-    #
-    # may_features_r = pd.read_csv('data/redo/may_features_r.csv')
-    # may_features_g = pd.read_csv('data/redo/may_features_g.csv')
-    # may_features_b = pd.read_csv('data/redo/may_features_b.csv')
-    # may_features_RE = pd.read_csv('data/redo/may_features_RE.csv')
-    # may_features_NIR = pd.read_csv('data/redo/may_features_NIR.csv')
-    #
-    # dec_dfs = [dec_features_r, dec_features_g, dec_features_b, dec_features_RE, dec_features_NIR]
-    # may_dfs = [may_features_r, may_features_g, may_features_b, may_features_RE, may_features_NIR]
-    # dec_merged_df = reduce(lambda left, right: pd.merge(left, right, on=['index', 'tree_name'],
-    #                                                 how='outer'), dec_dfs)
-    # may_merged_df = reduce(lambda left, right: pd.merge(left, right, on=['index', 'tree_name'],
-    #                                                     how='outer'), may_dfs)
-    # dec_merged_df.drop(columns=["index"])
-    # may_merged_df.drop(columns=["index"])
-    # # dec_merged_df = merge("dec",
-    # #                       [dec_features_r, dec_features_g, dec_features_b, dec_features_RE, dec_features_NIR])
-    # # may_merged_df = merge("may",
-    # #                       [may_features_r, may_features_g, may_features_b, may_features_RE, may_features_NIR])
-    #
-    # # make sure that when you concatenate, the column names are the same
-    # sets = ["glcm_mean", *FEATURES]
-    # col_names = ["index", "tree_name", *["r_"+x for x in sets],
-    #              *["g_"+x for x in sets], *["b_"+x for x in sets], *["RE_"+x for x in sets], *["NIR_"+x for x in sets]]
-    #
-    # dec_merged_df.rename(columns=lambda x: col_names[dec_merged_df.columns.get_loc(x)], inplace=True)
-    # may_merged_df.rename(columns=lambda x: col_names[may_merged_df.columns.get_loc(x)], inplace=True)
-    # all_merged_df = pd.concat([dec_merged_df, may_merged_df], axis=0, ignore_index=True)
-    #
-    # # encode the species values and put in column = 'id_based_on_tree_name'
-    # dec_merged_df_e = encode_tree_species(dec_merged_df)
-    # may_merged_df_e = encode_tree_species(may_merged_df)
-    # all_merged_df_e = encode_tree_species(all_merged_df)
-    #
-    #
-    # #
-    # all_merged_df_e.to_csv("data/redo/all_merged_data_e.csv")
-    # dec_merged_df_e.to_csv("data/redo/dec_merged_data_e.csv")
-    # may_merged_df_e.to_csv("data/redo/may_merged_data_e.csv")
-    #
-    dec_merged_df_e = pd.read_csv("data/redo/dec_merged_data_e.csv").drop(columns=["id_based_on_tree_name"])
-    may_merged_df_e = pd.read_csv("data/redo/may_merged_data_e.csv").drop(columns=["id_based_on_tree_name"])
-    all_merged_df_e = pd.read_csv("data/redo/all_merged_data_e.csv").drop(columns=["id_based_on_tree_name"])
-    windowed_glcm_dec = pd.read_csv("data/windowed_glcm/glcm_data_dec_all_7rad_15step_128bins.csv").sort_index().drop(columns=["id_based_on_tree_name"])
-    windowed_glcm_may = pd.read_csv("data/windowed_glcm/glcm_data_may_all_7rad_15step_128bins.csv").sort_index().drop(columns=["id_based_on_tree_name"])
-    merged_data_dec_windowed_glcm = pd.merge(dec_merged_df_e, windowed_glcm_dec, on=['index_', 'tree_name']).set_index('index_')
-    merged_data_may_windowed_glcm = pd.merge(may_merged_df_e, windowed_glcm_may, on=['index_', 'tree_name']).set_index('index_')
-
-    merged_data_dec_windowed_glcm.to_csv("data/glcm_merged_windowed/dec_merged_glcm_windowed.csv")
-    merged_data_may_windowed_glcm.to_csv("data/glcm_merged_windowed/may_merged_glcm_windowed.csv")
-    print(merged_data_may_windowed_glcm.columns)
-    large_trees_dec = merged_data_dec_windowed_glcm[merged_data_dec_windowed_glcm["tree_name"].isin(LARGE_TREES)]
-    small_trees_dec = merged_data_dec_windowed_glcm[merged_data_may_windowed_glcm["tree_name"].isin(SMALL_TREES)]
-    
-    large_trees_dec.to_csv("data/large_trees/large_trees_dec_merged.csv")
-    small_trees_dec.to_csv("data/large_trees/small_trees_dec_merged.csv")
-
-    large_trees_may = merged_data_may_windowed_glcm[merged_data_may_windowed_glcm["tree_name"].isin(LARGE_TREES)]
-    small_trees_may = merged_data_may_windowed_glcm[merged_data_may_windowed_glcm["tree_name"].isin(SMALL_TREES)]
-
-    large_trees_may.to_csv("data/large_trees/large_trees_may_merged.csv")
-    small_trees_may.to_csv("data/large_trees/small_trees_may_merged.csv")
-
+    dec = pd.read_csv("data/glcm_merged_windowed_redo/dec_merged_glcm_windowed.csv")
+    may = pd.read_csv("data/glcm_merged_windowed_redo/may_merged_glcm_windowed.csv")
+    all = pd.concat([dec, may], axis=0)
+    all.reset_index(drop=True, inplace=True)
+    all.drop("index", axis=1, inplace=True)
+    all.index.name= "index"
+    all.to_csv("data/glcm_merged_windowed_redo/all_merged_glcm_windowed.csv")
 if __name__ == "__main__":
     preprocessing()
-
-
-

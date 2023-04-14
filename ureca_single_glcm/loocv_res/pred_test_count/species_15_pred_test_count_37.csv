@@ -1,0 +1,40 @@
+,test,pred,tp_count
+0,['Alstonia Angulstiloba'],['Alstonia Angulstiloba'],3
+1,['Alstonia Angulstiloba'],['Sterculia Parviflora'],1
+2,['Bridelia Sp.'],['Claoxylon Indicum'],1
+3,['Bridelia Sp.'],['Spathodea Campanulatum'],1
+4,['Bridelia Sp.'],['Sterculia Parviflora'],1
+5,['Bridelia Sp.'],['Syzygium Polyanthum'],1
+6,['Calophyllum'],['Sterculia Parviflora'],2
+7,['Cinnamomum Iners'],['Sandoricum Koetjape'],1
+8,['Cinnamomum Iners'],['Spathodea Campanulatum'],1
+9,['Cinnamomum Iners'],['Sterculia Parviflora'],1
+10,['Cinnamomum Iners'],['Syzygium Polyanthum'],1
+11,['Claoxylon Indicum'],['Syzygium Polyanthum'],2
+12,['Clausena Excavata'],['Claoxylon Indicum'],1
+13,['Clausena Excavata'],['Clausena Excavata'],1
+14,['Clausena Excavata'],['Spathodea Campanulatum'],1
+15,['Clausena Excavata'],['Sterculia Parviflora'],1
+16,['Falcataria Moluccana'],['Alstonia Angulstiloba'],1
+17,['Falcataria Moluccana'],['Falcataria Moluccana'],5
+18,['Ficus Variegata'],['Falcataria Moluccana'],1
+19,['Ficus Variegata'],['Spathodea Campanulatum'],3
+20,['Pometia Pinnata'],['Sterculia Parviflora'],2
+21,['Sandoricum Koetjape'],['Cinnamomum Iners'],1
+22,['Sandoricum Koetjape'],['Syzygium Polyanthum'],1
+23,['Shorea Leprosula'],['Bridelia Sp.'],1
+24,['Shorea Leprosula'],['Clausena Excavata'],1
+25,['Spathodea Campanulatum'],['Ficus Variegata'],2
+26,['Spathodea Campanulatum'],['Spathodea Campanulatum'],5
+27,['Spathodea Campanulatum'],['Syzygium Polyanthum'],1
+28,['Sterculia Parviflora'],['Bridelia Sp.'],1
+29,['Sterculia Parviflora'],['Calophyllum'],1
+30,['Sterculia Parviflora'],['Falcataria Moluccana'],1
+31,['Sterculia Parviflora'],['Sterculia Parviflora'],4
+32,['Sterculia Parviflora'],['Syzygium Polyanthum'],1
+33,['Syzygium Polyanthum'],['Bridelia Sp.'],1
+34,['Syzygium Polyanthum'],['Cinnamomum Iners'],1
+35,['Syzygium Polyanthum'],['Sandoricum Koetjape'],1
+36,['Syzygium Polyanthum'],['Sterculia Parviflora'],1
+37,['Terminalia Catappa'],['Ficus Variegata'],1
+38,['Terminalia Catappa'],['Spathodea Campanulatum'],1

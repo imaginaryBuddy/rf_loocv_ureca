@@ -199,3 +199,180 @@
     # print(all_importances)
     # print("-" * 40)
 
+'''
+To generate glcm features
+'''
+ dec_data_NIR = CrownGLCMGenerator(dec_dir + "result_NIR.tif", dec_bounds, False)
+    dec_data_NIR.generate_glcm_with_features(Band(4))
+    dec_data_RE = CrownGLCMGenerator(dec_dir + "result_RedEdge.tif", dec_bounds, False)
+    dec_data_RE.generate_glcm_with_features(Band(3))
+    dec_data_WR = CrownGLCMGenerator(dec_dir + "result_Red.tif", dec_bounds, False)
+    dec_data_WR.generate_glcm_with_features(Band(5))
+    dec_data_WG = CrownGLCMGenerator(dec_dir + "result_Green.tif", dec_bounds, False)
+    dec_data_WG.generate_glcm_with_features(Band(6))
+    dec_data_WB = CrownGLCMGenerator(dec_dir + "result_Blue.tif", dec_bounds, False)
+    dec_data_WB.generate_glcm_with_features(Band(7))
+
+
+    dec_features_RE = pd.DataFrame(dec_data_RE.bands_species_glcm[Band(3).name],
+                                     columns=['tree_name', 'dec_RE_glcm_mean', f'dec_{Band(3).name}_{FEATURES[0]}',
+                                              f'dec_{Band(3).name}_{FEATURES[1]}', f'dec_{Band(3).name}_{FEATURES[2]}',
+                                              f'dec_{Band(3).name}_{FEATURES[3]}', f'dec_{Band(3).name}_{FEATURES[4]}'
+                                             , f'dec_{Band(3).name}_{FEATURES[5]}'])
+    dec_features_RE.index.name = 'index'
+    dec_features_NIR = pd.DataFrame(dec_data_NIR.bands_species_glcm[Band(4).name],
+                                      columns=['tree_name', 'dec_NIR_glcm_mean', f'dec_{Band(4).name}_{FEATURES[0]}',
+                                               f'dec_{Band(4).name}_{FEATURES[1]}', f'dec_{Band(4).name}_{FEATURES[2]}',
+                                               f'dec_{Band(4).name}_{FEATURES[3]}', f'dec_{Band(4).name}_{FEATURES[4]}'
+                                             , f'dec_{Band(4).name}_{FEATURES[5]}'])
+    dec_features_NIR.index.name = 'index'
+
+    dec_features_RE.to_csv('data/redo2/dec_features_RE_128.csv')
+    dec_features_NIR.to_csv('data/redo2/dec_features_NIR_128.csv')
+
+    dec_features_WR = pd.DataFrame(dec_data_WR.bands_species_glcm[Band(5).name],
+                                   columns=['tree_name', f'dec_{Band(5).name}_glcm_mean', f'dec_{Band(1).name}_{FEATURES[0]}',
+                                            f'dec_{Band(1).name}_{FEATURES[1]}', f'dec_{Band(1).name}_{FEATURES[2]}',
+                                            f'dec_{Band(1).name}_{FEATURES[3]}', f'dec_{Band(1).name}_{FEATURES[4]}'
+                                       , f'dec_{Band(1).name}_{FEATURES[5]}'])
+    dec_features_WR.index.name = 'index'
+    dec_features_WG = pd.DataFrame(dec_data_WG.bands_species_glcm[Band(6).name],
+                                    columns=['tree_name',  f'dec_{Band(6).name}_glcm_mean', f'dec_{Band(6).name}_{FEATURES[0]}',
+                                             f'dec_{Band(6).name}_{FEATURES[1]}', f'dec_{Band(6).name}_{FEATURES[2]}',
+                                             f'dec_{Band(6).name}_{FEATURES[3]}', f'dec_{Band(6).name}_{FEATURES[4]}'
+                                        , f'dec_{Band(6).name}_{FEATURES[5]}'])
+    dec_features_WG.index.name = 'index'
+
+    dec_features_WB = pd.DataFrame(dec_data_WB.bands_species_glcm[Band(7).name],
+                                  columns=['tree_name', f'dec_{Band(7).name}_glcm_mean', f'dec_{Band(7).name}_{FEATURES[0]}',
+                                           f'dec_{Band(7).name}_{FEATURES[1]}', f'dec_{Band(7).name}_{FEATURES[2]}',
+                                           f'dec_{Band(7).name}_{FEATURES[3]}', f'dec_{Band(7).name}_{FEATURES[4]}'
+                                      , f'dec_{Band(7).name}_{FEATURES[5]}'])
+    dec_features_WB.index.name = 'index'
+    dec_features_WR.to_csv('data/redo2/dec_features_WR_128.csv')
+    dec_features_WG.to_csv('data/redo2/dec_features_WG_128.csv')
+    dec_features_WB.to_csv('data/redo2/dec_features_WB_128.csv')
+
+
+'''
+To merge and encode the crown glcm csv files together
+'''
+
+
+    dec_features_r = pd.read_csv('data/redo/dec_features_r.csv')
+    dec_features_g = pd.read_csv('data/redo/dec_features_g.csv')
+    dec_features_b = pd.read_csv('data/redo/dec_features_b.csv')
+    dec_features_RE = pd.read_csv('data/redo2/dec_features_RE_128.csv')
+    dec_features_NIR = pd.read_csv('data/redo2/dec_features_NIR_128.csv')
+    dec_features_WR = pd.read_csv('data/redo2/dec_features_WR_128.csv')
+    dec_features_WG = pd.read_csv('data/redo2/dec_features_WG_128.csv')
+    dec_features_WB = pd.read_csv('data/redo2/dec_features_WB_128.csv')
+
+    may_features_r = pd.read_csv('data/redo/may_features_r.csv')
+    may_features_g = pd.read_csv('data/redo/may_features_g.csv')
+    may_features_b = pd.read_csv('data/redo/may_features_b.csv')
+    may_features_RE = pd.read_csv('data/redo2/may_features_RE_128.csv')
+    may_features_NIR = pd.read_csv('data/redo2/may_features_NIR_128.csv')
+    may_features_WR = pd.read_csv('data/redo2/may_features_WR_128.csv')
+    may_features_WG = pd.read_csv('data/redo2/may_features_WG_128.csv')
+    may_features_WB = pd.read_csv('data/redo2/may_features_WB_128.csv')
+
+    dec_dfs = [dec_features_r, dec_features_g, dec_features_b, dec_features_RE, dec_features_NIR, dec_features_WR, dec_features_WG, dec_features_WB]
+    may_dfs = [may_features_r, may_features_g, may_features_b, may_features_RE, may_features_NIR, may_features_WR, may_features_WG, may_features_WB]
+    dec_merged_df = reduce(lambda left, right: pd.merge(left, right, on=['index', 'tree_name'],
+                                                    how='outer'), dec_dfs)
+    may_merged_df = reduce(lambda left, right: pd.merge(left, right, on=['index', 'tree_name'],
+                                                        how='outer'), may_dfs)
+    dec_merged_df.drop(columns=["index"])
+    may_merged_df.drop(columns=["index"])
+    # # dec_merged_df = merge("dec",
+    # #                       [dec_features_r, dec_features_g, dec_features_b, dec_features_RE, dec_features_NIR])
+    # # may_merged_df = merge("may",
+    # #                       [may_features_r, may_features_g, may_features_b, may_features_RE, may_features_NIR])
+    #
+    # # make sure that when you concatenate, the column names are the same
+    sets = ["glcm_mean", *FEATURES]
+    col_names = ["index", "tree_name", *["r_"+x for x in sets],
+                 *["g_"+x for x in sets], *["b_"+x for x in sets], *["RE_"+x for x in sets], *["NIR_"+x for x in sets],
+                 *["WR_"+x for x in sets], *["WG_"+x for x in sets], *["WB_"+x for x in sets]]
+
+    dec_merged_df.rename(columns=lambda x: col_names[dec_merged_df.columns.get_loc(x)], inplace=True)
+    may_merged_df.rename(columns=lambda x: col_names[may_merged_df.columns.get_loc(x)], inplace=True)
+    all_merged_df = pd.concat([dec_merged_df, may_merged_df], axis=0, ignore_index=True)
+    #
+    # # encode the species values and put in column = 'id_based_on_tree_name'
+    dec_merged_df_e = encode_tree_species(dec_merged_df)
+    dec_merged_df_e.drop("index", axis=1, inplace=True)
+    dec_merged_df_e.index.name = "index"
+    may_merged_df_e = encode_tree_species(may_merged_df)
+    may_merged_df_e.drop("index", axis=1, inplace=True)
+    may_merged_df_e.index.name = "index"
+    all_merged_df_e = encode_tree_species(all_merged_df)
+    all_merged_df_e.drop("index", axis=1, inplace=True)
+    all_merged_df_e.index.name = "index"
+
+    #
+    #
+    # #
+    all_merged_df_e.to_csv("data/redo2/all_merged_data_128_e.csv")
+    dec_merged_df_e.to_csv("data/redo2/dec_merged_data_128_e.csv")
+    may_merged_df_e.to_csv("data/redo2/may_merged_data_128_e.csv")
+
+'''
+ To merge with windowed glcm from John's dataset
+'''
+
+    dec_merged_df_e = pd.read_csv("data/redo2/dec_merged_data_128_e.csv", index_col='index').drop(columns=["id_based_on_tree_name"])
+    may_merged_df_e = pd.read_csv("data/redo2/may_merged_data_128_e.csv", index_col='index').drop(columns=["id_based_on_tree_name"])
+    all_merged_df_e = pd.read_csv("data/redo2/all_merged_data_128_e.csv", index_col='index').drop(columns=["id_based_on_tree_name"])
+    windowed_glcm_dec = pd.read_csv("data/windowed_glcm/glcm_data_dec_all_7rad_15step_128bins.csv").sort_index().drop(columns=["id_based_on_tree_name"])
+    windowed_glcm_may = pd.read_csv("data/windowed_glcm/glcm_data_may_all_7rad_15step_128bins.csv").sort_index().drop(columns=["id_based_on_tree_name"])
+    merged_data_dec_windowed_glcm = pd.merge(dec_merged_df_e, windowed_glcm_dec, on=["index", "tree_name"])
+    merged_data_dec_windowed_glcm.drop("index", axis=1, inplace=True)
+    merged_data_dec_windowed_glcm.index.name = "index"
+    merged_data_may_windowed_glcm = pd.merge(may_merged_df_e, windowed_glcm_may, on=["index", "tree_name"])
+    merged_data_may_windowed_glcm.drop("index", axis=1, inplace=True)
+    merged_data_may_windowed_glcm.index.name = "index"
+
+    merged_data_dec_windowed_glcm.to_csv("data/glcm_merged_windowed_redo/dec_merged_glcm_windowed.csv")
+    merged_data_may_windowed_glcm.to_csv("data/glcm_merged_windowed_redo/may_merged_glcm_windowed.csv")
+
+
+'''
+To get the large and small trees
+'''
+
+    # large_trees_dec = merged_data_dec_windowed_glcm[merged_data_dec_windowed_glcm["tree_name"].isin(LARGE_TREES)]
+    # small_trees_dec = merged_data_dec_windowed_glcm[merged_data_may_windowed_glcm["tree_name"].isin(SMALL_TREES)]
+    #
+    # large_trees_dec.to_csv("data/large_trees/large_trees_dec_merged.csv")
+    # small_trees_dec.to_csv("data/large_trees/small_trees_dec_merged.csv")
+    #
+    # large_trees_may = merged_data_may_windowed_glcm[merged_data_may_windowed_glcm["tree_name"].isin(LARGE_TREES)]
+    # small_trees_may = merged_data_may_windowed_glcm[merged_data_may_windowed_glcm["tree_name"].isin(SMALL_TREES)]
+    #
+    # large_trees_may.to_csv("data/large_trees/large_trees_may_merged.csv")
+    # small_trees_may.to_csv("data/large_trees/small_trees_may_merged.csv")
+
+
+'''
+To get 5, 10, 15 species
+'''
+    for i, tree in data_dec.iterrows():
+        if len(species_15) < 15:
+            if tree["tree_name"] not in species_15:
+                name = str(tree["tree_name"])
+                species_15.append(name)
+        #
+        # if len(species_10) < 10:
+        #     if tree["tree_name"] not in species_10:
+        #         species_10 = species_10.append(tree["tree_name"])
+        #
+        # if len(species_15) < 15:
+        #     if tree["tree_name"] not in species_15:
+        #         species_15  = species_15.append(tree["tree_name"])
+
+        if len(species_15) == 15:
+            break
+
+    print(species_15)

@@ -1,0 +1,6 @@
+,test,pred,tp_count
+0,['Alstonia Angulstiloba'],['Alstonia Angulstiloba'],2
+21,['Falcataria Moluccana'],['Falcataria Moluccana'],3
+33,['Shorea Leprosula'],['Shorea Leprosula'],1
+37,['Spathodea Campanulatum'],['Spathodea Campanulatum'],3
+44,['Sterculia Parviflora'],['Sterculia Parviflora'],3

@@ -9,9 +9,9 @@ def load_glcm(data_dir):
     with open(data_dir, "rb") as f:
         tree = pickle.load(f)
     return tree
-
-callo = load_glcm("/Users/nicoleyap/PycharmProjects/ureca_single_glcm/FRModelYSH/data/dec_all_7rad_15step_128bins/Calophyllum_24.npz")
-print(callo.shape)
+#
+# callo = load_glcm("/Users/nicoleyap/PycharmProjects/ureca_single_glcm/FRModelYSH/data/dec_all_7rad_15step_128bins/Calophyllum_24.npz")
+# print(callo.shape)
 # #%%
 # tree = load_glcm('data/glcm_18Dec2020_3rad_2step_128bins_1xDownScale_Clausena Excavata_11.npz')
 #

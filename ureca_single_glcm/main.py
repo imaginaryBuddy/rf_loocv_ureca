@@ -11,8 +11,7 @@ from sklearn.preprocessing import LabelEncoder
 from random_forest import RandomForestManager, RandomForestOnly
 from functools import reduce
 from preprocessing import encode_tree_species
-SMALL_TREES = ["Calophyllum", "Dillenia Suffruticosa", "Shorea Leprosula", "Sterculia Parviflora"]
-LARGE_TREES = ["Falcataria Moluccana", "Ficus Variegata", "Spathodea Campanulatum", "Campnosperma Auriculatum"]
+from configs import *
 
 if __name__ == "__main__":
     # import warnings
@@ -112,8 +111,8 @@ if __name__ == "__main__":
     #                        'NIR_mean_contrast', 'g_glcm_mean', 'r_mean_contrast',
     #                        'RE_mean_contrast', 'RE_mean_homogeneity',
     #                        'NIR_mean_correlation', 'NIR_mean_ASM', '']
-    data_dec = pd.read_csv("data/glcm_merged_windowed/dec_merged_glcm_windowed.csv")
-    data_may = pd.read_csv("data/glcm_merged_windowed/may_merged_glcm_windowed.csv")
+    data_dec = pd.read_csv("data/glcm_merged_windowed_redo/dec_merged_glcm_windowed.csv")
+    data_may = pd.read_csv("data/glcm_merged_windowed_redo/may_merged_glcm_windowed.csv")
     importance = pd.read_csv("importances/ALL FROM MERGED DATA (GLCM FEATURES + WINDOWED GLCM)_feature_importance.csv")
     importance.rename(columns={importance.columns[0]:"feature"}, inplace=True)
     # num = 12
@@ -203,13 +202,33 @@ if __name__ == "__main__":
     # plt.show()
 
     top = df.sort_values("balanced_accuracy")
-    top = top.head(16)["feature"].tolist()
+    top = top.head(21)["feature"].tolist()
     columns_to_use_norm = ['index_', 'tree_name']
     columns_to_use_norm.extend(top)
     data_dec_amended = pd.DataFrame(data_dec, columns=columns_to_use_norm)
     data_may_amended = pd.DataFrame(data_may, columns=columns_to_use_norm)
-    rf = RandomForestOnly(data_dec_amended, data_may_amended,
-                          f"Selected_top from importance{len(top)}_1(GLCM FEATURES + WINDOWED GLCM)")
+
+
+
+    data_may_15 = data_may_amended.loc[data_may_amended['tree_name'].isin(species_15)]
+    data_dec_15 = data_dec_amended.loc[data_dec_amended['tree_name'].isin(species_15)]
+
+    # data_may_10 = data_may_amended.loc[data_may_amended['tree_name'].isin(species_10)]
+    # data_dec_10 = data_dec_amended.loc[data_dec_amended['tree_name'].isin(species_10)]
+    #
+    # data_may_15 = data_may_amended.loc[data_may_amended['tree_name'].isin(species_15)]
+    # data_dec_15 = data_dec_amended.loc[data_dec_amended['tree_name'].isin(species_15)]
+
+    rf = RandomForestOnly(data_dec_15, data_may_15,
+                          f"15 species Selected_top from importance{len(top)}_1(GLCM FEATURES + WINDOWED GLCM)")
     acc, bal_accuracy = rf.execute()
     # print("acc: ", acc)
     # print("bal_acc: ", bal_accuracy)
+
+    # rf = RandomForestOnly(data_dec_10, data_may_10,
+    #                       f"10 species Selected_top from importance{len(top)}_1(GLCM FEATURES + WINDOWED GLCM)")
+    # acc, bal_accuracy = rf.execute()
+    #
+    # rf = RandomForestOnly(data_dec_15, data_may_15,
+    #                       f"15 species Selected_top from importance{len(top)}_1(GLCM FEATURES + WINDOWED GLCM)")
+    # acc, bal_accuracy = rf.execute()
